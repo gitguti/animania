@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    
+        @import url('https://fonts.googleapis.com/css2?family=Fauna+One&family=Parisienne&family=Space+Mono:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            height: 100vh;
+            width: 100%;
+            display: grid;
+            place-items: center;
+            counter-reset: game;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .phone {
+            position: relative;
+            border: 8px solid black;
+            border-radius: 40px;
+            height: 600px;
+            width: 300px;
+            background-color: #4be8ff;
+            box-shadow: 9 19px 38px rgba(0, 0, 0, 0.3), 9 15px 12px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+        }
+
+        .layer {
+            position: absolute;
+        }
+
+        .layer-1 {
+            z-index: 1;
+            height: 450px;
+            width: 80px;
+            bottom: 0;
+            right: 60px;
+            animation-name: jump;
+            animation-duration: 1s;
+            animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            animation-iteration-count: infinite;
+        }
+
+        .layer-2 {
+            z-index: 2;
+            height: 450px;
+            width: 80px;
+            bottom: 0;
+            left: 60px;
+            animation-name: jump;
+            animation-duration: 0.5s;
+            animation-timing-function: ease-out;
+            animation-iteration-count: infinite;
+
+        }
+
+        .layer-3 {
+            z-index: 3;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 220px;
+            height: 400px;
+            bottom: 0;
+        }
+
+        .layer-4 {
+            z-index: 4;
+            left: 50px;
+            height: 350px;
+            width: 80px;
+            bottom: 0;
+            animation-name: jump;
+            animation-duration: 1.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+        }
+
+        .layer-5 {
+            z-index: 5;
+            left: 0;
+            margin: 0 auto;
+            width: 220px;
+            height: 300px;
+            bottom: 0;
+        }
+
+        .layer-6 {
+            z-index: 6;
+            right: 50px;
+            height: 280px;
+            width: 80px;
+            bottom: 0;
+            animation-name: jump;
+            animation-duration: 1s;
+            animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation-iteration-count: infinite;
+        }
+
+        .layer-7 {
+            z-index: 7;
+            right: 0;
+            margin: 0 auto;
+            width: 220px;
+            height: 230px;
+            bottom: 0;
+        }
+
+        .layer-8 {
+            z-index: 8;
+            width: 100%;
+            bottom: 0;
+            height: 120px;
+        }
+
+        .layer-9 {
+            z-index: 9;
+            left: 0;
+            width: 120px;
+            height: 100px;
+            bottom: 0;
+        }
+
+        .layer-10 {
+            z-index: 9;
+            right: 0;
+            width: 120px;
+            height: 100px;
+            bottom: 0;
+        }
+
+        input[type=checkbox] {
+            position: absolute;
+            appearance: none;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        input:checked {
+            counter-increment: game;
+        }
+
+        h1 {
+            color: #EFCC1A;
+            font-size: 62px;
+            text-align: center;
+            font-family: 'Parisienne', cursive;
+        }
+
+        .total-count {
+            position: absolute;
+            top: 18%;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #9a7145;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .total-count::after {
+            content: counter(game);
+        }
+
+
+        /*--Dibujando  bunnies*/
+
+        .left-ear--outer {
+            background-color: white;
+            border-radius: 90%;
+            height: 50px;
+            width: 20px;
+            position: absolute;
+            left: 10%;
+        }
+
+        .left-ear--inner {
+            background-color: pink;
+            border-radius: 90%;
+            height: 50px;
+            width: 12px;
+            position: absolute;
+            left: 15%;
+            top: 2%;
+        }
+
+        .right-ear--outer {
+            background-color: white;
+            border-radius: 90%;
+            height: 50px;
+            width: 20px;
+            position: absolute;
+            right: 10%;
+        }
+
+        .right-ear--inner {
+            background-color: pink;
+            border-radius: 90%;
+            height: 50px;
+            width: 12px;
+            position: absolute;
+            right: 15%;
+            top: 2%;
+        }
+
+        .head {
+            width: 90%;
+            height: 70px;
+            background-color: white;
+            border-radius: 90%;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+
+        .head__eye {
+            background-color: gray;
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            top: 15%;
+
+            animation-name: blink;
+            animation-iteration-count: infinite;
+            animation-duration: 2s;
+        }
+
+        .head__eye--left {
+            left: 30%;
+        }
+
+        .head__eye--right {
+            right: 30%;
+        }
+
+        /*-- Dibujando mountains-----*/
+        .mountain {
+            background-image: radial-gradient(salmon 20%, transparent 20%);
+            background-color: #E53935;
+            background-size: 50px 50px;
+            background-repeat: repeat;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            border-bottom-left-radius: 200px;
+            border-bottom-right-radius: 200px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .grass {
+            height: 20px;
+            width: 100%;
+            background-color: greenyellow;
+            border-top-left-radius: 59px;
+            border-top-right-radius: 59px;
+        }
+
+        .sub-grass {
+            background: linear-gradient(135deg, green 25%, transparent 25%) -50px 0,
+                linear-gradient(-135deg, green 25%, transparent 25%) -50px 0,
+                linear-gradient(45deg, green 25%, transparent 25%),
+                linear-gradient(-45deg, green 25%, transparent 25%);
+            background-size: 60px 60px;
+            height: 20px;
+        }
+
+        /*-- Dibujando footer-----*/
+        .footer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .footer-up {
+            width: 100%;
+            background-color: brown;
+            grid-row-start: 1;
+            grid-column-start: 2;
+            grid-column-end: 3;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+        }
+
+        .footer-down {
+            width: 100%;
+            background-color: brown;
+            grid-row-start: 2;
+            grid-column-start: 1;
+            grid-column-end: 4;
+        }
+
+        /*-- Dibujando zanahoria-----*/
+        .leaf--left {
+            background-color: #7ac02d;
+            border-radius: 90%;
+            height: 50px;
+            width: 20px;
+            position: absolute;
+            left: 30%;
+            transform: rotate(-45deg);
+        }
+
+        .leaf--right {
+            background-color: #86d035;
+            border-radius: 90%;
+            height: 50px;
+            width: 20px;
+            position: absolute;
+            right: 30%;
+            transform: rotate(45deg);
+        }
+
+        .carrot {
+            background-color: #FF9122;
+            border-top-left-radius: 90%;
+            border-top-right-radius: 90%;
+            height: 60%;
+            width: 70%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            background-image: radial-gradient(#bf6c19 20%, transparent 20%), radial-gradient(yellow 20%, transparent 20%);
+            background-size: 50px 20px;
+            background-repeat: repeat;
+        }
+
+        /*-- Empezamos las animaciones-----*/
+        @keyframes blink {
+            0% {
+                height: 4px;
+            }
+
+            5% {
+                transform: translate(0, 50%);
+                height: 2px;
+            }
+
+            10% {
+                height: 4px;
+                transform: translate(0, 0%);
+            }
+        }
+
+        @keyframes jump {
+            0% {
+                bottom: 0;
+            }
+
+            25% {
+                bottom: -80px;
+            }
+
+            100% {
+                bottom: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="phone">
+        <h1>Animania</h1>
+        <div class="layer layer-1">
+            <div class="bunny">
+                <input type="checkbox">
+                <div class="left-ear--outer"></div>
+                <div class="left-ear--inner"></div>
+                <div class="right-ear--outer"></div>
+                <div class="right-ear--inner"></div>
+                <div class="head">
+                    <div class="head__eye head__eye--left"></div>
+                    <div class="head__eye head__eye--right"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layer layer-2">
+            <div class="bunny">
+                <input type="checkbox">
+                <div class="left-ear--outer"></div>
+                <div class="left-ear--inner"></div>
+                <div class="right-ear--outer"></div>
+                <div class="right-ear--inner"></div>
+                <div class="head">
+                    <div class="head__eye head__eye--left"></div>
+                    <div class="head__eye head__eye--right"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layer layer-3">
+            <div class="mountain">
+                <div class="grass"></div>
+                <div class="sub-grass"></div>
+            </div>
+        </div>
+        <div class="layer layer-4">
+            <div class="bunny">
+                <input type="checkbox">
+                <div class="left-ear--outer"></div>
+                <div class="left-ear--inner"></div>
+                <div class="right-ear--outer"></div>
+                <div class="right-ear--inner"></div>
+                <div class="head">
+                    <div class="head__eye head__eye--left"></div>
+                    <div class="head__eye head__eye--right"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layer layer-5">
+            <div class="mountain">
+                <div class="grass"></div>
+                <div class="sub-grass"></div>
+            </div>
+        </div>
+        <div class="layer layer-6">
+            <div class="bunny">
+                <input type="checkbox">
+                <div class="left-ear--outer"></div>
+                <div class="left-ear--inner"></div>
+                <div class="right-ear--outer"></div>
+                <div class="right-ear--inner"></div>
+                <div class="head">
+                    <div class="head__eye head__eye--left"></div>
+                    <div class="head__eye head__eye--right"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layer layer-7">
+            <div class="mountain">
+                <div class="grass"></div>
+                <div class="sub-grass"></div>
+            </div>
+        </div>
+        <div class="layer layer-8">
+            <div class="footer">
+                <div class="footer-up"></div>
+                <div class="footer-down"></div>
+            </div>
+        </div>
+        <div class="layer layer-9">
+            <div class="leaf--left"></div>
+            <div class="leaf--right"></div>
+            <div class="carrot"></div>
+        </div>
+        <div class="layer layer-10">
+            <div class="leaf--left"></div>
+            <div class="leaf--right"></div>
+            <div class="carrot"></div>
+        </div>
+        <div class="total-count"> Score: </div>
+
+    </div>
+</body>
+
+</html>
